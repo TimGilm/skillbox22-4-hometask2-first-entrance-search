@@ -1,0 +1,3 @@
+module skillbox22_4_hometask2_first_entrance_search
+
+go 1.21
