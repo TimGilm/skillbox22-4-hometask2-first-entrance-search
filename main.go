@@ -13,25 +13,41 @@ const n = 12
 var a [n]int
 
 func main() {
-	fmt.Println("Введите 12 чисел в массив")
+	fmt.Println("Введите 12 чисел в массив") //1 2 2 2 3 4 5 6 7 8 9 10
 	for i := 0; i < n; i++ {
 		var num int
 		fmt.Scanln(&num)
 		a[i] = num
 	}
 	fmt.Print("Введите число, индекс первого вхождения которого необходимо найти")
-	var numSearch int
-	fmt.Scanln(&numSearch)
-	fmt.Printf("Индекс первого вхождения указанного числа %v", findIndex(a, numSearch))
+	var value int
+	fmt.Scanln(&value)
+	fmt.Printf("Индекс первого вхождения указанного числа %v", findIndex(a, value))
 }
 
-func findIndex(a [n]int, numSearch int) int {
-	result := 0
-	for i := 0; i < n; i++ {
-		if a[i] == numSearch {
-			result = i
+func findIndex(a [n]int, value int) (index int) {
+	//сперва применим бинарный поиск, зная что наш массив отсортирован
+	index = -1
+	min := 0
+	max := n - 1
+	for max >= min {
+		middle := (max + min) / 2
+		if a[middle] == value {
+			index = middle
 			break
+		} else if a[middle] > value {
+			max = middle - 1
+		} else {
+			min = middle + 1
 		}
 	}
-	return result
+	//проверим массив "слева" на дубли, и переназначим index, т.к. нам нужно первое вхождение элемента.
+	for i := index; i >= 0; i-- {
+		if a[i] < value {
+			break
+		} else {
+			index = i
+		}
+	}
+	return
 }
