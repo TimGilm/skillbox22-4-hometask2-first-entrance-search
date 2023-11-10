@@ -19,12 +19,13 @@ func main() {
 		fmt.Scanln(&num)
 		a[i] = num
 	}
-	fmt.Print("Введите число, индекс первого вхождения которого необходимо найти")
+	fmt.Println("Введите число, индекс первого вхождения которого необходимо найти")
 	var value int
 	fmt.Scanln(&value)
 	fmt.Printf("Индекс первого вхождения указанного числа %v", findIndex(a, value))
 }
 
+/*
 func findIndex(a [n]int, value int) (index int) {
 	//сперва применим бинарный поиск, зная что наш массив отсортирован
 	index = -1
@@ -50,4 +51,18 @@ func findIndex(a [n]int, value int) (index int) {
 		}
 	}
 	return
+}*/
+
+// второй вариант предложенный куратором
+func findIndex(array [n]int, val int) int {
+	left, right := 0, n-1
+	for left <= right {
+		middle := left + (right-left)/2
+		if array[middle] < val {
+			left = middle + 1
+		} else if array[middle] >= val {
+			right = middle - 1
+		}
+	}
+	return left
 }
